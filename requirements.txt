@@ -1,0 +1,28 @@
+URL SHortener loyhasi
+
+Maqsadi: Foydalanuvchi kiritgan uzun URL qiymatini tushunarli bo'lgan qisqa URL-ga almash tirish.'
+
+
+Asosiy modellar:
+  Users(foydalanuvchilar):
+        name,
+        email,
+        password
+
+  URL: 
+      orginal URL
+      code
+      userId
+      createAt
+      viewersCount -> 0
+
+Talablar:
+
+    Functional talablar:
+        
+      Foydalanuvchi name, email va password orqali ro'yhatdan o'taolishi kerak
+      Foydalanuvchi email va password orqali profiliga kirishi kerak.
+      Foydalanuvchi name, email va password malumotlarini yangilay olishi kerak.
+      Foydalanuvchi Uz profilidan chiqib(logout) boshqa profiliga kira olishi kerak.
+      Foydalanuvchi URL-ni qisqartira olishi kerak.
+      Foydalanuvchi qisqartirgan URL-larni koorishi kerak va ulardan necha marta foydalanilganini ko'rish kerak
