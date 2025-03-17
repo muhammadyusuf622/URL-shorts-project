@@ -1,28 +1,28 @@
-URL SHortener loyhasi
+URL Shortener loyihasi
 
-Maqsadi: Foydalanuvchi kiritgan uzun URL qiymatini tushunarli bo'lgan qisqa URL-ga almash tirish.'
-
+Maqsadi: Foydalanuvchi kiritgan uzun URL qiymatini, tushunarli bo'lgan qisqa
+URL ga almashtirish.
 
 Asosiy modellar:
-  Users(foydalanuvchilar):
-        name,
-        email,
+
+    Users(foydalanuvchilar):
+        name
+        email
         password
 
-  URL: 
-      orginal URL
-      code
-      userId
-      createAt
-      viewersCount -> 0
+    URL:
+        originalUrl
+        code
+        userId
+        createdAt
+        viewersCount -> 0
 
-Talablar:
+Talablar: 
 
-    Functional talablar:
-        
-      Foydalanuvchi name, email va password orqali ro'yhatdan o'taolishi kerak
-      Foydalanuvchi email va password orqali profiliga kirishi kerak.
-      Foydalanuvchi name, email va password malumotlarini yangilay olishi kerak.
-      Foydalanuvchi Uz profilidan chiqib(logout) boshqa profiliga kira olishi kerak.
-      Foydalanuvchi URL-ni qisqartira olishi kerak.
-      Foydalanuvchi qisqartirgan URL-larni koorishi kerak va ulardan necha marta foydalanilganini ko'rish kerak
+    Funksional talablar:
+        Foydalanuvchi name, email va password orqali ro'yhatdan o'tishi kerak.
+        Foydalanuvchi email va password orqali profilga kirishi kerak.
+        Foydalanuvchi name, email va password ma'lumotlarini yangilay olishi kerak.
+        Foydalanuvchi o'z profilidan chiqib(logout) boshqa profilga kira olishi kerak.
+        Foydalanuvchi URL'ni qisqartira olishi kerak.
+        Foydalanuvchi qisqartirgan URL'larini ko'rishi va ulardan necha marta foydalanganligini ko'rishi kerak
