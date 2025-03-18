@@ -1,11 +1,38 @@
 const pool = require("../config/db.config");
 
 exports.getAllUsers = async (req, res) => {
-  const users = await pool.query(`SELECT * FROM users`);
+  const { limit = 10, page = 1, sortField = "id", sortOrder = "ASC" } = req.query;
+
+  if(!(Number(limit) && Number(page))){
+    res.status(400).send({
+      status:"error",
+      message:`limit: ${limit} OR Page: ${page} Xato yuborildi`
+    });
+  };
+
+  const allUsersCount = await pool.query(`SELECT COUNT(*) FROM users`);
+
+  const possibleFields = ["id", "name", "email"]
+  const possibleOrders = ["ASC", "DESC"]
+
+  if(!(possibleFields.some(f => f== sortField) && 
+  possibleOrders.some(or => or == sortOrder))){
+  
+    return res.status(400).send({
+      message: `Sort field: ${sortField} yoki sort order: ${sortOrder} xato yuborildi`,
+    });
+  }
+
+  const users = await pool.query(`SELECT * FROM users ORDER BY ${sortField}  ${sortOrder} LIMIT $1 OFFSET $2;`, 
+    [limit, (page - 1) * limit],
+  );
+  console.log(users)
 
   res.send({
     message: "Success ✅",
-    count: users.rowCount,
+    limit: Number(limit),
+    page: Number(page),
+    count: +allUsersCount.rows[0].count,
     data: users.rows,
   });
 };
