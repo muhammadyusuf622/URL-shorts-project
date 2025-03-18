@@ -1,8 +1,8 @@
 const express = require("express");
 const { APP_PORT } = require("./config/app.config");
 const userRouter = require("./routes/user.routes");
-// const pageRoutes = require("./routes/page.routes");
-// const urlRoutes = require("./routes/url.routes");
+const pageRoutes = require("./routes/page.routes");
+const urlRoutes = require("./routes/url.routes");
 const createTables = require("./model/db");
 
 const app = express();
@@ -19,9 +19,9 @@ createTables()
     process.exit(1);
   });
 
-// app.use("/", pageRoutes);
+app.use("/", pageRoutes);
 app.use("/api/users", userRouter);
-// app.use("/api/urls", urlRoutes);
+app.use("/api/urls", urlRoutes);
 
 app.all("/*", (req, res) => {
   res.status(404).send({

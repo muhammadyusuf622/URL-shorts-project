@@ -1,6 +1,5 @@
-const path = require("node:path");
 const { Router } = require("express");
-const { readJSONFile } = require("../helpers/fs");
+const pool = require("../config/db.config");
 
 const pageRoutes = Router();
 
@@ -8,21 +7,25 @@ pageRoutes.get("/", (req, res) => {
   res.render("index");
 });
 
-pageRoutes.get("/route/:code", (req, res) => {
+pageRoutes.get("/route/:code", async (req, res) => {
   const { code } = req.params;
 
-  const filePath = path.join(__dirname, "..", "data", "urls.json");
-  const allUrls = readJSONFile(filePath);
+  const foundedUrl = await pool.query(`SELECT * FROM urls WHERE code = $1`, [
+    code,
+  ]);
 
-  const foundedUrl = allUrls.find((url) => url.code === code);
-
-  if (!foundedUrl) {
+  if (foundedUrl.rowCount == 0) {
     return res.status(404).send({
       message: "URL not found",
     });
   }
 
-  res.redirect(foundedUrl.originalUrl);
+  await pool.query(
+    `UPDATE urls SET viewers_count = viewers_count + 1 WHERE code = $1`,
+    [code]
+  );
+
+  res.redirect(foundedUrl.rows[0].original_url);
 });
 
 module.exports = pageRoutes;
